@@ -1,0 +1,4 @@
+Scroll animation elements:
+    1.Description and image
+    2.Phone Mockup that is horizontal and upon scrolling rotates into vertical position
+        - also, after phone is in final position, scroll the phone's screen through different apps UIs

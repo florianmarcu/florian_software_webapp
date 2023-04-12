@@ -1,6 +1,8 @@
+import 'package:florian_software_webapp/common_widgets/footer/footer.dart';
 import 'package:florian_software_webapp/screens/about/about_provider.dart';
 import 'package:florian_software_webapp/utils/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class AboutPage extends StatelessWidget {
   const AboutPage({super.key});
@@ -547,10 +549,21 @@ class AboutPage extends StatelessWidget {
               )
             )
           ),
-          SizedBox(height: 100)
-          // Container(
-          //   height: min( screenSize.height*0.2, 200),
-          // )
+          SizedBox(height: 50,),
+          Container(
+            height: 70,
+            child: Center(
+              child: FilledButton(
+                onPressed: () => context.go('/contact'),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+                  child: Text("Let's talk!", style: Theme.of(context).textTheme.bodyMedium,),
+                ),
+              ),
+            ),
+          ),
+          SizedBox(height: 80),
+          Footer()
         ],
       ),
     );

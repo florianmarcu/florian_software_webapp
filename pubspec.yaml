@@ -41,6 +41,7 @@ dependencies:
   carousel_slider:
   firebase_core:
   cloud_firestore:
+  url_launcher:
   
 
 dev_dependencies:
@@ -72,6 +73,8 @@ flutter:
     - assets/images/test.png
     - assets/images/deploy.png
     - assets/images/maintain.png
+    - assets/images/instagram.png
+    - assets/images/facebook.png
 
   fonts:
     # - family: Schyler

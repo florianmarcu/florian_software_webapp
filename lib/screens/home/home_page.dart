@@ -157,7 +157,7 @@ class HomePage extends StatelessWidget {
     return ResponsiveWidget(
       largeScreen: largeScreen(context, provider), 
       mediumScreen: null,
-      smallScreen: smallScreen(context, provider),
+      smallScreen: largeScreen(context, provider),
     );
   }
 }

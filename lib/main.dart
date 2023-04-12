@@ -1,4 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:florian_software_webapp/common_widgets/end_drawer/end_drawer.dart';
+import 'package:florian_software_webapp/common_widgets/footer/footer_provider.dart';
 import 'package:florian_software_webapp/common_widgets/web_appbar/web_appbar.dart';
 import 'package:florian_software_webapp/common_widgets/web_appbar/web_appbar_provider.dart';
 import 'package:florian_software_webapp/screens/about/about_page.dart';
@@ -6,6 +8,8 @@ import 'package:florian_software_webapp/screens/about/about_provider.dart';
 import 'package:florian_software_webapp/screens/home/home_page.dart';
 import 'package:florian_software_webapp/screens/home/home_provider.dart';
 import 'package:florian_software_webapp/screens/portfolio/portfolio_provider.dart';
+import 'package:florian_software_webapp/screens/wrapper/wrapper.dart';
+import 'package:florian_software_webapp/screens/wrapper/wrapper_provider.dart';
 import 'package:florian_software_webapp/utils/utils.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -58,22 +62,16 @@ GoRouter router = GoRouter(
         return MultiProvider(
           providers: [
             ChangeNotifierProvider(
-              create: (_) => WebAppbarProvider(),
+              create: (_) => WrapperProvider(),
             ),
-            // ChangeNotifierProvider.value(
-            //   value: routerChangesProvider
-            // ),
             Provider.value(
               value: routeName
+            ),
+            ChangeNotifierProvider(
+              create: (context) => FooterProvider()
             )
           ],
-          child: Scaffold(
-            extendBodyBehindAppBar: true,
-            appBar: WebAppBar(),
-            body: Center(
-              child: child,
-            ),
-          ),
+          child: Wrapper(child)
         );
       },
       routes: [

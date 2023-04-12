@@ -1,4 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:florian_software_webapp/common_widgets/footer/footer.dart';
 import 'package:florian_software_webapp/screens/portfolio/portfolio_provider.dart';
 import 'package:florian_software_webapp/utils/utils.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +24,7 @@ class PortfolioPage extends StatelessWidget {
             ),
           ),
           CarouselSlider(
+            carouselController: provider.carouselController,
             options: CarouselOptions(
               viewportFraction: 1,
               scrollDirection: Axis.horizontal,
@@ -59,13 +61,29 @@ class PortfolioPage extends StatelessWidget {
                       ),
                     ),
                     Expanded(
-                      child: Image.asset(localAsset('phone'), height: screenSize.height * 0.3,),
+                      child: Row(
+                        children: [
+                          Expanded(child: Align(
+                            alignment: Alignment.centerRight,
+                            child: Image.asset(localAsset('phone'), height: screenSize.height * 0.3,))
+                          ),
+                          Expanded(child: Align(
+                            alignment: Alignment(0.8, 0),
+                            child: GestureDetector(
+                              onTap: () => provider.carouselController.nextPage(duration: Duration(milliseconds: 1000), curve: Curves.ease),
+                              child: Icon(Icons.arrow_forward_ios_rounded, size: 50, color: Colors.grey,))
+                            )
+                          )
+                        ],
+                      ),
                     )
                   ],
                 ),
               ),
             ).toList()
-          )
+          ),
+          SizedBox(height: 70,),
+          Footer()
         ],
       ),
       // body: ScrollTransformView(

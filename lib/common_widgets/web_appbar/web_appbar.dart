@@ -1,26 +1,26 @@
 
 import 'package:florian_software_webapp/common_widgets/web_appbar/web_appbar_provider.dart';
+import 'package:florian_software_webapp/screens/wrapper/wrapper_provider.dart';
+import 'package:florian_software_webapp/utils/responsiveness.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'dart:math';
 
 class WebAppBar extends StatelessWidget with PreferredSizeWidget {
 
-  @override
-  Widget build(BuildContext context) {
-    var provider = context.watch<WebAppbarProvider>();
-    // var currentRouteName = context.watch<RouterChangesProvider>().currentRouteName;
+  Widget largeScreen(BuildContext context, WrapperProvider provider){
     var currentRouteName = context.watch<String?>();
     var pages = provider.pages;
     return AppBar(
       scrolledUnderElevation: 10,
       backgroundColor: Theme.of(context).canvasColor,
       centerTitle: false,
+      actions: null,
       title: Padding(
         padding: EdgeInsets.only(left: min(150.0, MediaQuery.of(context).size.width*0.1), right: min(150.0, MediaQuery.of(context).size.width*0.1)),
         child: Row(
           children: [
-            const Text("flo-stacks"),
+            const Text("flo:stacks"),
             Spacer(),
             Row(
               children: pages.keys.map((path) => Container(
@@ -34,7 +34,7 @@ class WebAppBar extends StatelessWidget with PreferredSizeWidget {
                     )
                   ),
                   onPressed: () {
-                    provider.updateCurrentRouteName(path);
+                    //provider.updateCurrentRouteName(path);
                     context.go('/$path');
                   },
                   child: Text(
@@ -49,6 +49,43 @@ class WebAppBar extends StatelessWidget with PreferredSizeWidget {
         ),
       ),
     );
+  }
+
+  Widget smallScreen(BuildContext context, WrapperProvider provider){
+    return AppBar(
+      scrolledUnderElevation: 10,
+      backgroundColor: Theme.of(context).canvasColor,
+      centerTitle: false,
+      title: Padding(
+        padding: EdgeInsets.only(left: min(150.0, MediaQuery.of(context).size.width*0.1), right: min(150.0, MediaQuery.of(context).size.width*0.1)),
+        child: Row(
+          children: [
+            const Text("flo:stacks"),
+            Spacer(),
+          ],
+        ),
+      ),
+      
+      // actions: [
+      //   IconButton(
+      //     onPressed: (){
+      //       provider.endDrawerKey.currentState ?? provider.endDrawerKey.currentState!.openEndDrawer();
+      //     }, 
+      //     icon: Icon(Icons.menu_rounded)
+      //   )
+      // ],
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    var provider = context.watch<WrapperProvider>();
+    return ResponsiveWidget(
+      largeScreen: largeScreen(context, provider),
+      mediumScreen: null, 
+      smallScreen: smallScreen(context, provider)
+    );
+    
   }
   
   @override

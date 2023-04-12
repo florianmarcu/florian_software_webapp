@@ -1,9 +1,10 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 Color _tertiaryColor = Color(0xFF3E363F);
 Color _highlightColor = Colors.white;
 Color _primaryColor = Color(0xFF382DB3);
-Color _lightPrimaryColor = Color(0xFF382DB3).withOpacity(0.5);
+Color _lightPrimaryColor = Color(0xFF978ED1); // primary color with opacity 0.5
 Color _secondaryColor = Color(0xFFDD403A);
 /// The color of the text, used in TextTheme
 Color _textColor = _tertiaryColor;
@@ -24,7 +25,10 @@ theme(BuildContext context) => ThemeData(
   fontFamily: 'Sequel Sans',
   textButtonTheme: _textButtonTheme,
   filledButtonTheme: _filledButtonTheme,
-  inputDecorationTheme: _inputDecorationTheme
+  iconButtonTheme: _iconButtonTheme,
+  inputDecorationTheme: _inputDecorationTheme,
+  snackBarTheme: _snackBarTheme,
+  pageTransitionsTheme: _pageTransitionsTheme
 );
 
 _appBarTheme(BuildContext context) => AppBarTheme(
@@ -37,6 +41,12 @@ _appBarTheme(BuildContext context) => AppBarTheme(
     fontWeight: FontWeight.bold,
     fontFamily: 'Sequel Sans'
   )
+);
+
+var _snackBarTheme = SnackBarThemeData(
+  backgroundColor: _lightPrimaryColor,
+  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+  elevation: 1
 );
 
 var _textButtonTheme = TextButtonThemeData(
@@ -58,6 +68,26 @@ var _filledButtonTheme = FilledButtonThemeData(
     ),
     padding: MaterialStateProperty.all<EdgeInsets>(
       EdgeInsets.symmetric(horizontal: 40, vertical: 15)
+    ),
+  )
+);
+
+var _iconButtonTheme = IconButtonThemeData(
+  style: ButtonStyle(
+    backgroundColor: MaterialStateProperty.all<Color>(
+      _canvasColor 
+    ),
+    iconColor: MaterialStateProperty.all<Color>(
+      _canvasColor 
+    ),
+    textStyle: MaterialStateProperty.all<TextStyle>(
+      TextStyle(
+        fontFamily: 'Sequel Sans',
+        color: _highlightColor
+      ) 
+    ),
+    padding: MaterialStateProperty.all<EdgeInsets>(
+      EdgeInsets.zero
     ),
   )
 );
@@ -102,7 +132,7 @@ _textTheme(BuildContext context) => TextTheme(
   ),
   bodySmall: TextStyle(
     color: _highlightColor,
-    fontSize: 14*1/(MediaQuery.textScaleFactorOf(context))
+    fontSize: 12*1/(MediaQuery.textScaleFactorOf(context))
   ),
 );
 
@@ -128,4 +158,40 @@ InputDecorationTheme _inputDecorationTheme = InputDecorationTheme(
     borderRadius: BorderRadius.circular(30),
     borderSide: BorderSide(color: Colors.transparent),
   ),
+  focusedErrorBorder: OutlineInputBorder(
+    borderRadius: BorderRadius.circular(30),
+    borderSide: BorderSide(color: Colors.transparent),
+  ),
+  errorBorder: OutlineInputBorder(
+    borderRadius: BorderRadius.circular(30),
+    borderSide: BorderSide(color: Colors.transparent),
+  ),
+  disabledBorder: OutlineInputBorder(
+    borderRadius: BorderRadius.circular(30),
+    borderSide: BorderSide(color: Colors.transparent),
+  ),
 );
+
+final _pageTransitionsTheme = NoTransitionsOnWeb();
+
+class NoTransitionsOnWeb extends PageTransitionsTheme {
+  @override
+  Widget buildTransitions<T>(
+    route,
+    context,
+    animation,
+    secondaryAnimation,
+    child,
+  ) {
+    if (kIsWeb) {
+      return child;
+    }
+    return super.buildTransitions(
+      route,
+      context,
+      animation,
+      secondaryAnimation,
+      child,
+    );
+  }
+}
